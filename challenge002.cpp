@@ -1,5 +1,5 @@
 /** 
- *  @file    challenge2.cpp
+ *  @file    challenge002.cpp
  *  @author  Ibar Romay 
  *  @github  rowmatrix  
  *  @date    09/29/2016 
