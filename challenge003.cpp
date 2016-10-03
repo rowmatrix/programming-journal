@@ -29,10 +29,10 @@ int main(int argc, char *argv[])
 
     string message;
     int key;
-    char option;
+    char *option;
 
     if( argc < 4 ){
-        cout << "Usage: ./solution <message/text> <e/d> <k>" << endl;
+        cerr << "Usage: ./solution <message/text> <e/d> <k>" << endl;
         return 1;
     } 
 
@@ -40,11 +40,13 @@ int main(int argc, char *argv[])
     option  = argv[2];
     key     = atoi( argv[3] );
 
-    if( option == 'e' or option == 'E' ){
-        cout << "encryption" << endl;
+    if( option[0] == 'e' or option[0] == 'E' ){
+        cout << "encryption" << " key = " << key << endl;
+        cout << encrypt(message, key) << endl;
     }
-    else if( option == 'd' or option == 'D' ){
-        cout << "decryption" << endl;
+    else if( option[0] == 'd' or option[0] == 'D' ){
+        cout << "decryption" << " key = " << key << endl;
+        cout << decrypt(message, key) << endl;
     }
     else {
         cout << "e or d was not accepted" << endl;
@@ -53,10 +55,40 @@ int main(int argc, char *argv[])
     return 0;
 }
 
-string encrypt(string msg, int k){
+string encrypt(string msg, int key){
+    string result_str;
+    
+    for( string::size_type i = 0; i < msg.size(); i++ ){
+        char letter = msg[i];
+        // cout << letter << endl;
+        letter = letter + key;
+        if( letter > 122 ){
+            int overlap_shift = letter - 122;
+            letter = 97 + overlap_shift - 1;
+        }
+        result_str += letter;
+        // cout << letter << endl;
+        // cout << result_str << endl;
+    }
 
+    return result_str;
 }
 
-string decrypt(string msg, int k){
+string decrypt(string msg, int key){
+    string result_str;
+    
+    for( string::size_type i = 0; i < msg.size(); i++ ){
+        char letter = msg[i];
+        // cout << letter << endl;
+        letter = letter - key;
+        if( letter < 97 ){
+            int overlap_shift = 97 - letter;
+            letter = 122 - overlap_shift + 1;
+        }
+        result_str += letter;
+        // cout << letter << endl;
+        // cout << result_str << endl;
+    }
 
+    return result_str;
 }
